@@ -14,8 +14,10 @@ app.use(express.urlencoded({extended:false}));
 
 
 
-app.use(router);
+app.use('/api',router);
 //middleware history vue debe estar antes de el urlenconde
+
+//history permite actualizar la page y que quede en la ruta spa
 const history = require('connect-history-api-fallback');
 app.use(history());
 app.use(express.static(path.join(__dirname, 'public')));
