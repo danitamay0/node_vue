@@ -3,7 +3,7 @@ import Nota from '../models/Nota'
 const NotaController ={
     async nuevaNota(req,res){
         const body=req.body;
-        console.log(req.body);
+        body.usuarioId=req.user._id;
         
         try {
             const notaDB=await Nota.create(body);
@@ -20,9 +20,9 @@ const NotaController ={
     async allNotas(req,res){
     
         
-        
+        const usuarioId=req.user._id;
         try {
-            const notaDB=await Nota.find({});
+            const notaDB=await Nota.find({usuarioId});
             console.log(notaDB);
             
             res.status(200).json(notaDB);
@@ -56,6 +56,8 @@ const NotaController ={
     async update(req,res){
         const _id=req.params.id;
         const body=req.body;
+     
+        
         try {
             const notaDB=await Nota.findByIdAndUpdate(_id,body,{new:true});
             if(!notaDB){
